@@ -29,56 +29,56 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/ai-service:latest
+          tags: alexisbarross/aks-store-app:ai-service-latest
           context: ./src/ai-service
 
       - name: Build and push makeline-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/makeline-service:latest
+          tags: alexisbarross/aks-store-app:makeline-service-latest
           context: ./src/makeline-service
 
       - name: Build and push order-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/order-service:latest
+          tags: alexisbarross/aks-store-app:order-service-latest
           context: ./src/order-service
 
       - name: Build and push product-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/product-service:latest
+          tags: alexisbarross/aks-store-app:product-service-latest
           context: ./src/product-service
 
       - name: Build and push store-admin
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/store-admin:latest
+          tags: alexisbarross/aks-store-app:store-admin-latest
           context: ./src/store-admin
 
       - name: Build and push store-front
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/store-front:latest
+          tags: alexisbarross/aks-store-app:store-front-latest
           context: ./src/store-front
 
       - name: Build and push virtual-customer
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/virtual-customer:latest
+          tags: alexisbarross/aks-store-app:virtual-customer-latest
           context: ./src/virtual-customer
 
       - name: Build and push virtual-worker
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarross/virtual-worker:latest
+          tags: alexisbarross/aks-store-app:virtual-worker-latest
           context: ./src/virtual-worker
 
   deploy:
@@ -87,7 +87,9 @@ jobs:
 
     steps:
       - name: Set up Kubeconfig
-        run: echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
 
       - name: Install Argo CD CLI
         run: |
