@@ -1,9 +1,9 @@
-name: Build and Deploy to AKS
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main  # or your preferred branch
+      - main
 
 jobs:
   build:
@@ -25,12 +25,68 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push aks-store-app
         uses: docker/build-push-action@v2
         with:
-          context: .
           push: true
-          tags: alexisbarros00/aks-store-app:latest  # Update this
+          tags: alexisbarros00/aks-store-app:latest
+          context: ./src/aks-store-app
+
+      - name: Build and push ai-service
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/ai-service:latest
+          context: ./src/ai-service
+
+      - name: Build and push makeline-service
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/makeline-service:latest
+          context: ./src/makeline-service
+
+      - name: Build and push order-service
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/order-service:latest
+          context: ./src/order-service
+
+      - name: Build and push product-service
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/product-service:latest
+          context: ./src/product-service
+
+      - name: Build and push store-admin
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/store-admin:latest
+          context: ./src/store-admin
+
+      - name: Build and push store-front
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/store-front:latest
+          context: ./src/store-front
+
+      - name: Build and push virtual-customer
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/virtual-customer:latest
+          context: ./src/virtual-customer
+
+      - name: Build and push virtual-worker
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: alexisbarros00/virtual-worker:latest
+          context: ./src/virtual-worker
 
   deploy:
     runs-on: ubuntu-latest
