@@ -93,7 +93,9 @@ jobs:
 
       - name: Install Argo CD CLI
         run: |
-          curl -sSL https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install-latest.sh | bash
+          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+          rm argocd-linux-amd64
 
       - name: Login to Argo CD
         run: argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
