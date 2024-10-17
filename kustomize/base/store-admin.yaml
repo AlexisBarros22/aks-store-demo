@@ -67,6 +67,4 @@ spec:
   selector:
     app: store-admin
   type: LoadBalancer
-  loadBalancerIP: <internal-ip>
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"  
+    
