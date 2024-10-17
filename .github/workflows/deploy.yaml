@@ -29,56 +29,56 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/ai-service:latest
+          tags: alexisbarros00/aks-store-app:ai-service
           context: ./src/ai-service
 
       - name: Build and push makeline-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/makeline-service:latest
+          tags: alexisbarros00/aks-store-app:makeline-service
           context: ./src/makeline-service
 
       - name: Build and push order-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/order-service:latest
+          tags: alexisbarros00/aks-store-app:order-servicet
           context: ./src/order-service
 
       - name: Build and push product-service
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/product-service:latest
+          tags: alexisbarros00/aks-store-app:product-service
           context: ./src/product-service
 
       - name: Build and push store-admin
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/store-admin:latest
+          tags: alexisbarros00/aks-store-app:store-admin
           context: ./src/store-admin
 
       - name: Build and push store-front
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/store-front:latest
+          tags: alexisbarros00/aks-store-app:store-front
           context: ./src/store-front
 
       - name: Build and push virtual-customer
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/virtual-customer:latest
+          tags: alexisbarros00/aks-store-app:virtual-customer
           context: ./src/virtual-customer
 
       - name: Build and push virtual-worker
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexisbarros00/aks-store-app/virtual-worker:latest
+          tags: alexisbarros00/aks-store-app:virtual-worker
           context: ./src/virtual-worker
 
   deploy:
