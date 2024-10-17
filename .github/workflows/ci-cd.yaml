@@ -13,17 +13,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Log in to Azure Container Registry
-      uses: azure/docker-login@v1
+    - name: Log in to DockerHub
+      uses: docker/login-action@v1
       with:
-        login-server: ${{ secrets.ACR_NAME }}.azurecr.io
-        username: ${{ secrets.AZURE_CREDENTIALS.clientId }}
-        password: ${{ secrets.AZURE_CREDENTIALS.clientSecret }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and push Docker image
       run: |
-        docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/my-app:latest .
-        docker push ${{ secrets.ACR_NAME }}.azurecr.io/my-app:latest
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,6 +46,9 @@ jobs:
       run: |
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
 
-    - name: Deploy to AKS
+    - name: Trigger Argo CD sync
       run: |
-        kubectl set image deployment/my-app my-app=${{ secrets.ACR_NAME }}.azurecr.io/my-app:latest
+        argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+        argocd app sync my-app
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
