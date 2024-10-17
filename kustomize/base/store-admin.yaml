@@ -66,4 +66,7 @@ spec:
     targetPort: 8081
   selector:
     app: store-admin
-  type: LoadBalancer  
+  type: LoadBalancer
+  loadBalancerIP: <internal-ip>
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"  
